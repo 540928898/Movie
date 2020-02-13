@@ -376,11 +376,16 @@
         var surl = "";
         $.ajax({url:surl + "/customer/check/"+escape($("#email").val())+"/3?r=" + Math.random(),
             success : function(data) {
+                console.log(data.data)
                 if (data.data) {
-                } else {
-                    $(".emailerror").show();
-                    $(".emailerror").html("<span>▲邮箱已被注册，请重新输入</span>");
-                    $("#email").addClass("errorC");
+                    console.log("i am success")
+                    console.log(typeof (data.data));
+                }
+                else {
+                    console.log("wo yiran zhixingle ????")
+                    // $(".emailerror").show();
+                    // $(".emailerror").html("<span>▲邮箱已被注册，请重新输入</span>");
+                    // $("#email").addClass("errorC");
 //                    style = 'position: relative ;left: 290px;'
                 }
             }
@@ -446,6 +451,7 @@
                     if (data.data) {
                         REGISTER.doSubmit();
                     } else {
+                        console.log($("#regForm_mod").serialize());
                         alert("用户名或者邮箱已被注册");
                         $('#identifier').modal('hide');
 

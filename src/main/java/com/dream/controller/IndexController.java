@@ -108,8 +108,6 @@ public class IndexController {
         }
         return "Home";
     }
-
-
     //选电影界面
     @RequestMapping("/index")
     public String showIndex( HttpServletRequest request){

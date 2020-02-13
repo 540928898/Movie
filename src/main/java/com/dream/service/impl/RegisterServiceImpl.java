@@ -31,13 +31,16 @@ public class RegisterServiceImpl implements RegisterService {
     @Override
     public E3Result checkData(String param, int type) {
         // 根据不同的type生成不同的查询条件
+        System.out.println("this is checkData");
         UserExample example = new UserExample();
+//        System.out.println(example.getOrderByClause());
         UserExample.Criteria criteria = example.createCriteria();
         // 1：用户名 2：手机号 3：邮箱
         if (type == 1) {
             criteria.andUsernameEqualTo(param);
         }
         else if (type == 3){
+            System.out.println(param);
             criteria.andEmailEqualTo(param);
         }
         else{
@@ -46,6 +49,10 @@ public class RegisterServiceImpl implements RegisterService {
         // 执行查询
         List<User> list = userMapper.selectByExample(example);
         // 判断结果中是否包含数据
+        for (User i:list
+             ) {
+            System.out.println(i.getUserid());
+        }
         if (list != null && list.size() > 0) {
             // 如果有数据返回false
             return E3Result.ok(false);
@@ -56,7 +63,11 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public E3Result register(User user) {
+        System.out.println("This is register");
         // 数据有效性校验
+        System.out.println(user.getUsername());
+        System.out.println(user.getPassword());
+        System.out.println(user.getEmail());
         if (StringUtils.isBlank(user.getUsername()) || StringUtils.isBlank(user.getPassword())|| StringUtils.isBlank(user.getEmail())) {
             return E3Result.build(400, "用户数据不完整，注册失败");
         }
@@ -67,6 +78,7 @@ public class RegisterServiceImpl implements RegisterService {
         String md5Pass = DigestUtils.md5DigestAsHex(user.getPassword().getBytes());
         user.setPassword(md5Pass);
         // 把用户数据插入到数据库中
+        System.out.println(user.getUsername());
         userMapper.insert(user);//新增3.18
         Integer userId = user.getUserid();
         // 返回添加成功

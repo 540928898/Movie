@@ -42,6 +42,7 @@ public class CustomerController {
         //选择topmovies给用户选择她喜欢的电影
         List<Movie> list = topDefaultMoviesService.SelectRegDefaultMovie();
         request.getSession().setAttribute("TopRegDefaultMovie",list);
+        System.out.println("this is register");
         return "register";
     }
     //进入登录页面
@@ -55,6 +56,7 @@ public class CustomerController {
     @ResponseBody
     public E3Result checkData(@PathVariable String param, @PathVariable Integer type)   {
         //后端decode解码(如果前端输入的是中文)
+//        System.out.println("this is customer check ");
         try {
             String str = URLDecoder.decode(param, "UTF-8");
             E3Result e3Result = registerService.checkData(str, type);
@@ -70,6 +72,7 @@ public class CustomerController {
     @ResponseBody
     public E3Result register(User user,HttpServletRequest request) {
         //修改3.18 返回用户id,用于用户选择喜欢的电影后把相应信息存broswer表
+        System.out.println("this is regeist");
         Integer userId = 0;
         E3Result e3Result = registerService.register(user);
         if (e3Result.getStatus() == 200) {
